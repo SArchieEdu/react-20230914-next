@@ -1,20 +1,21 @@
-"use client";
+import { NavigateButton } from "@/components/NavigateButton/component";
+import { Products } from "@/components/Products/component";
+import {
+  ThemeContext,
+  ThemeContextProvider,
+} from "@/components/ThemeContextProvider/component";
+import { getProducts } from "@/services/api";
 
-import { usePathname, useRouter } from "next/navigation";
+export default async function ProductsPage({ searchParams }) {
+  const products = await getProducts();
+  console.log(products);
 
-export default function ProductsPage({ searchParams }) {
-  const router = useRouter();
-  const pathname = usePathname();
-  console.log(pathname);
   return (
-    <div>
-      <button
-        onClick={() => {
-          router.replace("/cart");
-        }}
-      >
-        Cart
-      </button>
-    </div>
+    <ThemeContextProvider theme="123">
+      <div>
+        <NavigateButton to="/cart">Cart</NavigateButton>
+        <Products products={products} />
+      </div>
+    </ThemeContextProvider>
   );
 }
